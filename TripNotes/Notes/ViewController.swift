@@ -58,7 +58,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         let cell = tableView.dequeueReusableCell(withIdentifier: "NoteCell", for: indexPath) as! NoteCell
         return cell
     }
-    
+
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

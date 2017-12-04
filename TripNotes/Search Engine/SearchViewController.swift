@@ -101,12 +101,13 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
                     let json = JSON(data)
                     if json["predictions"].array?.first?["description"].string != nil {
                         print ("success")
-//                        var counter: Int = 0
-//                        while counter != json["predictions"].array?.count {
-//                            let description: String = (json["predictions"].array?[counter]["description"].string)!
-//                            self.cities.append(City(description: description))
-//                            counter += 1
-//                        }
+                        var counter: Int = 0
+                        while counter != json["predictions"].array?.count {
+                            let description: String = (json["predictions"].array?[counter]["description"].string)!
+                            print(description)
+                            self.cities.append(City(description: description))
+                            counter += 1
+                        }
                     } else { print("failure")}
                 case .failure(let error):
                     print(error.localizedDescription)

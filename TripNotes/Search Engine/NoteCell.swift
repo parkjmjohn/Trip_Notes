@@ -20,12 +20,15 @@ class NoteCell: UITableViewCell {
     
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
+        
+        // MARL: Title setup
         title = UILabel(frame: CGRect(x: padding1, y: padding1, width: 200, height: textSize + padding1 / 2))
         title.font = UIFont(name: "HelveticaNeue-Bold", size: textSize)
         contentView.addSubview(title)
     }
     
     func setupCell(city: City) {
+        print("ran")
         title.text = city.description
     }
     
