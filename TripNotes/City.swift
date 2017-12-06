@@ -8,8 +8,11 @@
 import Foundation
 
 struct City {
+    
+    // MARK: title
     var label: String
     
+    // MARK: init
     init(label: String) {
         self.label = label
     }

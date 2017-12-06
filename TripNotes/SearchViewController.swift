@@ -12,8 +12,8 @@ import SwiftyJSON
 class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate {
     
     // MARK: Spacing
-    var padding1: CGFloat = 7
-    var padding2: CGFloat = 40
+    let padding1: CGFloat = 7
+    let padding2: CGFloat = 40
     
     // MARK: UI
     var cancelButton: UIBarButtonItem!
@@ -40,7 +40,7 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
     // MARK: cancelButton setup
     func setUpCancelButton() {
-        cancelButton = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(cancelButtonPressed))
+        cancelButton = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(cancelButtonPressed))
         navigationItem.leftBarButtonItem = cancelButton
     }
 
@@ -87,6 +87,11 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
         let cell = tableView.dequeueReusableCell(withIdentifier: "NoteCell", for: indexPath) as! NoteCell
         cell.setUpLabelTitle(city: cities[indexPath.row])
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let cityViewController = CityViewController(city: cities[indexPath.row])
+        navigationController?.pushViewController(cityViewController, animated: true)
     }
     
     // MARK: Required Swift function
