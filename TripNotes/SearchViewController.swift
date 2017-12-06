@@ -9,7 +9,7 @@ import UIKit
 import Alamofire
 import SwiftyJSON
 
-class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate {
     
     // MARK: Spacing
     var padding1: CGFloat = 7
@@ -21,7 +21,7 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
     var tableView: UITableView!
     
     // MARK: Cell
-    
+    var cities: [City] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -45,6 +45,7 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
     }
 
     @objc func cancelButtonPressed() {
+        cities.removeAll()
         dismiss(animated: true, completion: nil)
     }
     
@@ -53,7 +54,19 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
         searchBar = UISearchBar(frame: CGRect(x: padding1, y: padding1, width: view.frame.width - padding1 * 2, height: padding2))
         searchBar.placeholder = "Search a city..."
         searchBar.barTintColor = .white
+        searchBar.delegate = self
         view.addSubview(searchBar)
+    }
+    
+    func searchBar(_ searchBar: UISearchBar,
+                   textDidChange searchText: String) {
+//DEBUG        cities.append(City(label: "Testing"))
+        if searchBar.text != "" {
+            title = searchBar.text
+        } else {
+            title = "Search a City"
+        }
+        tableView.reloadData()
     }
     
     // MARK: tableView setup
@@ -66,14 +79,18 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 0
+        return cities.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "NoteCell", for: indexPath) as! NoteCell
-//DEBUG cell.setUpLabelTitle(title: "Test")
+        cell.setUpLabelTitle(city: cities[indexPath.row])
         return cell
     }
+    
+//DEBUG - NEED TO CREATE NETWORK MANAGER [to bind to functions of ViewControllers]
+    
+    
     
     // MARK: Required Swift function
     override func didReceiveMemoryWarning() {

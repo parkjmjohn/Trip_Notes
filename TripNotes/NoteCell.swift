@@ -31,8 +31,8 @@ class NoteCell: UITableViewCell {
         contentView.addSubview(label)
     }
     
-    func setUpLabelTitle(title: String) {
-        label.text = title
+    func setUpLabelTitle(city: City) {
+        label.text = city.label
     }
     
     required init?(coder aDecoder: NSCoder) {
