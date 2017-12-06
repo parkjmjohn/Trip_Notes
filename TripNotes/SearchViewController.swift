@@ -27,7 +27,7 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
         super.viewDidLoad()
         
         // Title
-        title = "Search a City"
+        title = "Search a Location"
         
         // Background Color
         view.backgroundColor = .white
@@ -52,7 +52,7 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
     // MARK: searchBar setup
     func setUpSearchBar() {
         searchBar = UISearchBar(frame: CGRect(x: padding1, y: padding1, width: view.frame.width - padding1 * 2, height: padding2))
-        searchBar.placeholder = "Search a city..."
+        searchBar.placeholder = "Search a Location..."
         searchBar.barTintColor = .white
         searchBar.delegate = self
         view.addSubview(searchBar)
@@ -64,16 +64,21 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
         if searchBar.text != "" {
             title = "Results for: " + searchBar.text!
         } else {
-            title = "Search a City"
+            title = "Search a Location"
         }
-        cities = NetworkManager.getCities(input: searchBar.text!)
-//        print(cities)
+//        cities = NetworkManager.getCities(input: searchBar.text!)
+//DEBUG        print(cities)
+        
+//DEBUG USE NETWORKMANAGER instead
+//        cities.removeAll()
+        getCities(input: searchBar.text!)
         tableView.reloadData()
+        cities.removeAll()
     }
     
     // MARK: tableView setup
     func setUpTableView() {
-        tableView = UITableView(frame: CGRect(x: 0, y: padding1 * 2 + padding2, width: view.frame.width, height: view.frame.height - padding1 * 2 - padding2))
+        tableView = UITableView(frame: CGRect(x: 0, y: padding1 * 2 + padding2, width: view.frame.width, height: view.frame.height - (padding1 * 5 + padding2 * 2)))
         tableView.delegate = self
         tableView.dataSource = self
         tableView.register(NoteCell.self, forCellReuseIdentifier: "NoteCell")
@@ -93,6 +98,39 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
     // MARK: Required Swift function
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
+    }
+    
+// DEBUG - USE NETWORK MANAGER INSTEAD
+    func getCities(input: String) {
+        //DEBUG        print("attempted1")
+        // GoogleAPI
+        let googlePlacesAPI: String = "https://maps.googleapis.com/maps/api/place/autocomplete/json?"
+        let space: String = "%20"
+        let googleAPIkey: String = "&key=AIzaSyCympdqfdlfyrj-tJ8XzE5YFiWpaZCD8pU"
+        
+//        var cities: [City] = []
+        let input: String = "input=" + input.replacingOccurrences(of: " ", with: space)
+        let url: String = googlePlacesAPI + input + googleAPIkey
+        Alamofire.request(url, method: .get)
+            .validate()
+            .responseJSON { response in
+                switch response.result {
+                case let .success(data):
+                    let json = JSON(data)
+                    //DEBUG                    print("attempted2")
+                    if json["predictions"].array?.first?["description"].string != nil {
+                        var counter: Int = 0
+                        while counter != json["predictions"].array?.count {
+                            let ret: String = (json["predictions"].array?[counter]["description"].string)!
+//DEBUG                            print(ret)
+                            self.cities.append(City(label: ret))
+                            counter += 1
+                        }
+                    }
+                case .failure(let error):
+                    print(error.localizedDescription)
+                }
+        }
     }
     
 }
