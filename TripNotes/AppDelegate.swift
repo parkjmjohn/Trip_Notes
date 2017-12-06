@@ -24,7 +24,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     // MARK: Required Swift function
     func applicationWillResignActive(_ application: UIApplication) {
-
     }
     
     func applicationDidEnterBackground(_ application: UIApplication) {

@@ -60,20 +60,14 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
     func searchBar(_ searchBar: UISearchBar,
                    textDidChange searchText: String) {
-//DEBUG        cities.append(City(label: "Testing"))
         if searchBar.text != "" {
             title = "Results for: " + searchBar.text!
+            getCities(input: searchBar.text!)
         } else {
             title = "Search a Location"
+            cities.removeAll()
+            tableView.reloadData()
         }
-//        cities = NetworkManager.getCities(input: searchBar.text!)
-//DEBUG        print(cities)
-        
-//DEBUG USE NETWORKMANAGER instead
-//        cities.removeAll()
-        getCities(input: searchBar.text!)
-        tableView.reloadData()
-        cities.removeAll()
     }
     
     // MARK: tableView setup
@@ -100,15 +94,13 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
         super.didReceiveMemoryWarning()
     }
     
-// DEBUG - USE NETWORK MANAGER INSTEAD
+//FIX - USE NETWORK MANAGER INSTEAD
     func getCities(input: String) {
-        //DEBUG        print("attempted1")
         // GoogleAPI
         let googlePlacesAPI: String = "https://maps.googleapis.com/maps/api/place/autocomplete/json?"
         let space: String = "%20"
         let googleAPIkey: String = "&key=AIzaSyCympdqfdlfyrj-tJ8XzE5YFiWpaZCD8pU"
         
-//        var cities: [City] = []
         let input: String = "input=" + input.replacingOccurrences(of: " ", with: space)
         let url: String = googlePlacesAPI + input + googleAPIkey
         Alamofire.request(url, method: .get)
@@ -117,15 +109,15 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
                 switch response.result {
                 case let .success(data):
                     let json = JSON(data)
-                    //DEBUG                    print("attempted2")
                     if json["predictions"].array?.first?["description"].string != nil {
+                        self.cities.removeAll()
                         var counter: Int = 0
                         while counter != json["predictions"].array?.count {
                             let ret: String = (json["predictions"].array?[counter]["description"].string)!
-//DEBUG                            print(ret)
                             self.cities.append(City(label: ret))
                             counter += 1
                         }
+                        self.tableView.reloadData()
                     }
                 case .failure(let error):
                     print(error.localizedDescription)

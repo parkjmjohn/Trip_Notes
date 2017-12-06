@@ -26,7 +26,7 @@ class NoteCell: UITableViewCell {
     
     // MARK: label setup
     func setUpLabel() {
-        label = UILabel(frame: CGRect(x: padding1, y: frame.height / 3, width: frame.width - padding1, height: textSize + 2))
+        label = UILabel(frame: CGRect(x: padding1, y: frame.height / 3, width: frame.width + padding1 * 8, height: textSize + 2))
         label.font = UIFont(name: "Futura-CondensedExtraBold", size: textSize)
         contentView.addSubview(label)
     }

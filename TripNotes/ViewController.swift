@@ -13,6 +13,9 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     var tableView: UITableView!
     var createNote: UIBarButtonItem!
     
+    // MARKL: Cell
+    var cities: [City] = []
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -34,12 +37,12 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 0
+        return cities.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "NoteCell", for: indexPath) as! NoteCell
-//DEBUG cell.setUpLabelTitle(title: "Test")
+        cell.setUpLabelTitle(city: cities[indexPath.row])
         return cell
     }
     
