@@ -66,6 +66,8 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
         } else {
             title = "Search a City"
         }
+        cities = NetworkManager.getCities(input: searchBar.text!)
+//        print(cities)
         tableView.reloadData()
     }
     
