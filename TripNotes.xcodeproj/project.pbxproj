@@ -46,6 +46,13 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0D86C22B1FD63ED400258DC6 /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Cell;
+			sourceTree = "<group>";
+		};
 		0DA3D7761FCF4AC500A88672 = {
 			isa = PBXGroup;
 			children = (
@@ -68,6 +75,12 @@
 			isa = PBXGroup;
 			children = (
 				0DA3D7821FCF4AC500A88672 /* AppDelegate.swift */,
+				0DA3D7841FCF4AC500A88672 /* ViewController.swift */,
+				0DA3D7981FCF875A00A88672 /* SearchViewController.swift */,
+				0DA3D7961FCF820600A88672 /* NoteCell.swift */,
+				0DA3D7A01FD08E3500A88672 /* City.swift */,
+				0DA3D79E1FCFD4A500A88672 /* NetworkManager.swift */,
+				0D86C22B1FD63ED400258DC6 /* Cell */,
 				0DA3D79A1FCFD3B500A88672 /* Notes */,
 				0DA3D79B1FCFD3EB00A88672 /* Search Engine */,
 				0DA3D7891FCF4AC500A88672 /* Assets.xcassets */,
@@ -80,7 +93,6 @@
 		0DA3D79A1FCFD3B500A88672 /* Notes */ = {
 			isa = PBXGroup;
 			children = (
-				0DA3D7841FCF4AC500A88672 /* ViewController.swift */,
 			);
 			path = Notes;
 			sourceTree = "<group>";
@@ -88,10 +100,6 @@
 		0DA3D79B1FCFD3EB00A88672 /* Search Engine */ = {
 			isa = PBXGroup;
 			children = (
-				0DA3D79E1FCFD4A500A88672 /* NetworkManager.swift */,
-				0DA3D7981FCF875A00A88672 /* SearchViewController.swift */,
-				0DA3D7961FCF820600A88672 /* NoteCell.swift */,
-				0DA3D7A01FD08E3500A88672 /* City.swift */,
 			);
 			path = "Search Engine";
 			sourceTree = "<group>";

@@ -2,34 +2,37 @@
 //  NoteCell.swift
 //  TripNotes
 //
-//  Created by John Park on 11/29/17.
+//  Created by John Park on 12/5/17.
 //  Copyright © 2017 John Park. All rights reserved.
 //
 
 import UIKit
 
 class NoteCell: UITableViewCell {
-
-    //MARK: Spacing
-    let padding1: CGFloat = 8
-    let textSize: CGFloat = 16.0
     
-    //debug: Xcode wont let me call this description
+    // MARK: Spacing
+    var padding1: CGFloat = 8
+    var textSize: CGFloat = 16
+    
     // MARK: UI
-    var title: UILabel!
+    var label: UILabel!
     
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
-        // MARL: Title setup
-        title = UILabel(frame: CGRect(x: padding1, y: padding1, width: 200, height: textSize + padding1 / 2))
-        title.font = UIFont(name: "HelveticaNeue-Bold", size: textSize)
-        contentView.addSubview(title)
+        // UI setup
+        setUpLabel()
     }
     
-    func setupCell(city: City) {
-        print("ran")
-        title.text = city.description
+    // MARK: label setup
+    func setUpLabel() {
+        label = UILabel(frame: CGRect(x: padding1, y: frame.height / 3, width: frame.width - padding1, height: textSize + 2))
+        label.font = UIFont(name: "Futura-CondensedExtraBold", size: textSize)
+        contentView.addSubview(label)
+    }
+    
+    func setUpLabelTitle(title: String) {
+        label.text = title
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -39,9 +42,9 @@ class NoteCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
     }
-
+    
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
     }
-
+    
 }

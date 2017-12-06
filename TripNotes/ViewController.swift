@@ -5,16 +5,13 @@
 //  Created by John Park on 11/29/17.
 //  Copyright © 2017 John Park. All rights reserved.
 //
-
 import UIKit
 
 class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     // MARK: UI
-    var createNote: UIBarButtonItem!
     var tableView: UITableView!
-    
-    // MARK: Cell
+    var createNote: UIBarButtonItem!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -22,26 +19,12 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         // Title
         title = "Trip Notes"
         
-        // Setup UI
-        setUpCreateNote()
+        // UI setup
         setUpTableView()
-    }
-
-    // MARK: Note button setup
-    func setUpCreateNote() {
-        createNote = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(createNotePressed))
-        navigationItem.rightBarButtonItem = createNote
+        setUpCreateNote()
     }
     
-    // MARK: Action Targets
-    @objc func createNotePressed() {
-        let searchViewController = UINavigationController(rootViewController: SearchViewController())
-        searchViewController.navigationBar.barTintColor = .white
-        searchViewController.navigationBar.isTranslucent = false
-        present(searchViewController, animated: true)
-    }
-    
-    // MARK: TableView setup
+    // MARK: tableView setup
     func setUpTableView() {
         tableView = UITableView(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.height))
         tableView.delegate = self
@@ -56,13 +39,26 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "NoteCell", for: indexPath) as! NoteCell
+//DEBUG cell.setUpLabelTitle(title: "Test")
         return cell
     }
-
     
+    // MARK: createNote setup
+    func setUpCreateNote() {
+        createNote = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(createNotePressed))
+        navigationItem.rightBarButtonItem = createNote
+    }
+    
+    @objc func createNotePressed() {
+        let searchViewController = UINavigationController(rootViewController: SearchViewController())
+        searchViewController.navigationBar.barTintColor = .white
+        searchViewController.navigationBar.isTranslucent = false
+        present(searchViewController, animated: true)
+    }
+    
+    // MARK: Required Swift function
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
     
 }
-
