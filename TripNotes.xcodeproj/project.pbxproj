@@ -13,8 +13,8 @@
 		0DA3D78D1FCF4AC500A88672 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0DA3D78B1FCF4AC500A88672 /* LaunchScreen.storyboard */; };
 		0DA3D7971FCF820600A88672 /* NoteCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DA3D7961FCF820600A88672 /* NoteCell.swift */; };
 		0DA3D7991FCF875A00A88672 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DA3D7981FCF875A00A88672 /* SearchViewController.swift */; };
-		0DA3D79F1FCFD4A500A88672 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DA3D79E1FCFD4A500A88672 /* NetworkManager.swift */; };
 		0DA3D7A11FD08E3500A88672 /* City.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DA3D7A01FD08E3500A88672 /* City.swift */; };
+		0DAA5D291FD7A90C001E37ED /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DAA5D281FD7A90C001E37ED /* NetworkManager.swift */; };
 		FA65A07FC4DF5B8B5492A7E0 /* Pods_TripNotes.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D5E88B73805BEF3DA53696B7 /* Pods_TripNotes.framework */; };
 /* End PBXBuildFile section */
 
@@ -27,8 +27,8 @@
 		0DA3D78E1FCF4AC500A88672 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0DA3D7961FCF820600A88672 /* NoteCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteCell.swift; sourceTree = "<group>"; };
 		0DA3D7981FCF875A00A88672 /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
-		0DA3D79E1FCFD4A500A88672 /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
 		0DA3D7A01FD08E3500A88672 /* City.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = City.swift; sourceTree = "<group>"; };
+		0DAA5D281FD7A90C001E37ED /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = NetworkManager.swift; path = /Users/mia/Desktop/iOS/TripNotes/TripNotes/NetworkManager.swift; sourceTree = "<absolute>"; };
 		864F474843364549582700CD /* Pods-TripNotes.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TripNotes.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TripNotes/Pods-TripNotes.debug.xcconfig"; sourceTree = "<group>"; };
 		ACA5F41D43F57A6816D53AF5 /* Pods-TripNotes.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TripNotes.release.xcconfig"; path = "Pods/Target Support Files/Pods-TripNotes/Pods-TripNotes.release.xcconfig"; sourceTree = "<group>"; };
 		D5E88B73805BEF3DA53696B7 /* Pods_TripNotes.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TripNotes.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -46,13 +46,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		0D86C22B1FD63ED400258DC6 /* Cell */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Cell;
-			sourceTree = "<group>";
-		};
 		0DA3D7761FCF4AC500A88672 = {
 			isa = PBXGroup;
 			children = (
@@ -77,31 +70,14 @@
 				0DA3D7821FCF4AC500A88672 /* AppDelegate.swift */,
 				0DA3D7841FCF4AC500A88672 /* ViewController.swift */,
 				0DA3D7981FCF875A00A88672 /* SearchViewController.swift */,
+				0DAA5D281FD7A90C001E37ED /* NetworkManager.swift */,
 				0DA3D7961FCF820600A88672 /* NoteCell.swift */,
 				0DA3D7A01FD08E3500A88672 /* City.swift */,
-				0DA3D79E1FCFD4A500A88672 /* NetworkManager.swift */,
-				0D86C22B1FD63ED400258DC6 /* Cell */,
-				0DA3D79A1FCFD3B500A88672 /* Notes */,
-				0DA3D79B1FCFD3EB00A88672 /* Search Engine */,
 				0DA3D7891FCF4AC500A88672 /* Assets.xcassets */,
 				0DA3D78B1FCF4AC500A88672 /* LaunchScreen.storyboard */,
 				0DA3D78E1FCF4AC500A88672 /* Info.plist */,
 			);
 			path = TripNotes;
-			sourceTree = "<group>";
-		};
-		0DA3D79A1FCFD3B500A88672 /* Notes */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Notes;
-			sourceTree = "<group>";
-		};
-		0DA3D79B1FCFD3EB00A88672 /* Search Engine */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = "Search Engine";
 			sourceTree = "<group>";
 		};
 		78DBCD582D749A5295D188F7 /* Frameworks */ = {
@@ -251,10 +227,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0DAA5D291FD7A90C001E37ED /* NetworkManager.swift in Sources */,
 				0DA3D7971FCF820600A88672 /* NoteCell.swift in Sources */,
 				0DA3D7851FCF4AC500A88672 /* ViewController.swift in Sources */,
 				0DA3D7A11FD08E3500A88672 /* City.swift in Sources */,
-				0DA3D79F1FCFD4A500A88672 /* NetworkManager.swift in Sources */,
 				0DA3D7991FCF875A00A88672 /* SearchViewController.swift in Sources */,
 				0DA3D7831FCF4AC500A88672 /* AppDelegate.swift in Sources */,
 			);

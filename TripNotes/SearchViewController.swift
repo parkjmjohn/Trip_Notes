@@ -62,7 +62,7 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
                    textDidChange searchText: String) {
 //DEBUG        cities.append(City(label: "Testing"))
         if searchBar.text != "" {
-            title = searchBar.text
+            title = "Results for: " + searchBar.text!
         } else {
             title = "Search a City"
         }
@@ -87,10 +87,6 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
         cell.setUpLabelTitle(city: cities[indexPath.row])
         return cell
     }
-    
-//DEBUG - NEED TO CREATE NETWORK MANAGER [to bind to functions of ViewControllers]
-    
-    
     
     // MARK: Required Swift function
     override func didReceiveMemoryWarning() {
