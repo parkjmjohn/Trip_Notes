@@ -8,10 +8,14 @@
 
 import UIKit
 
+protocol CityProtocol {
+    func didPressSaveCity(city: City)
+}
+
 class CityViewController: UIViewController {
 
     // MARK: Spacing
-    let padding1: CGFloat = 10
+    let padding1: CGFloat = 75
     let fontSize: CGFloat = 20
     
     // MARK: UI
@@ -20,6 +24,9 @@ class CityViewController: UIViewController {
     
     // MARK: Data
     var city: City!
+    
+    // MARK: Delegation
+    var cityDelegate: CityProtocol!
     
     // MARK: Init
     init(city: City) {
@@ -42,7 +49,11 @@ class CityViewController: UIViewController {
         setUpLabel()
         
         // title
-        title = label.text
+        let str: String = label.text!
+        if let range = str.range(of: ",") {
+            let ret = str[..<range.lowerBound]
+            title = String(ret).uppercased()
+        }
     }
     
     // MARK: saveButton setup
@@ -52,6 +63,7 @@ class CityViewController: UIViewController {
     }
     
     @objc func saveCity() {
+        cityDelegate.didPressSaveCity(city: city)
         navigationController?.popViewController(animated: true)
     }
     
@@ -59,7 +71,7 @@ class CityViewController: UIViewController {
     func setUpLabel() {
         label = UILabel(frame: CGRect(x: 0, y: padding1, width: view.frame.width, height: fontSize))
         label.textAlignment = .center
-        label.text = city.label.uppercased()
+        label.text = city.label
         label.font = UIFont(name: "Futura-CondensedExtraBold", size: fontSize)
         view.addSubview(label)
     }

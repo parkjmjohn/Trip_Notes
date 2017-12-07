@@ -7,7 +7,7 @@
 //
 import UIKit
 
-class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, SearchProtocol {
     
     // MARK: UI
     var tableView: UITableView!
@@ -53,10 +53,21 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     }
     
     @objc func createNotePressed() {
-        let searchViewController = UINavigationController(rootViewController: SearchViewController())
-        searchViewController.navigationBar.barTintColor = .white
-        searchViewController.navigationBar.isTranslucent = false
-        present(searchViewController, animated: true)
+//        let searchViewController = UINavigationController(rootViewController: SearchViewController()
+//        searchViewController.navigationBar.barTintColor = .white
+//        searchViewController.navigationBar.isTranslucent = false
+//        present(searchViewController, animated: true)
+        let searchViewController = SearchViewController()
+        searchViewController.citiesDelegate = self
+        navigationController?.pushViewController(searchViewController, animated: true)
+    }
+    
+    // MARK: Delegations
+    func didPressDone(cities: [City]) {
+        for City in cities {
+            self.cities.append(City)
+        }
+        tableView.reloadData()
     }
     
     // MARK: Required Swift function

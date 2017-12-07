@@ -9,19 +9,31 @@ import UIKit
 import Alamofire
 import SwiftyJSON
 
-class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate {
+protocol SearchProtocol {
+    func didPressDone(cities: [City])
+}
+
+class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate, CityProtocol {
     
     // MARK: Spacing
-    let padding1: CGFloat = 7
-    let padding2: CGFloat = 40
+    let padding1: CGFloat = 50
+    let padding2: CGFloat = 90
     
     // MARK: UI
-    var cancelButton: UIBarButtonItem!
+    var doneButton: UIBarButtonItem!
     var searchBar: UISearchBar!
     var tableView: UITableView!
     
-    // MARK: Cell
+    // MARK: Data
     var cities: [City] = []
+    var saveCities: [City] = []
+    
+    // MARK: Delegations
+    var citiesDelegate: SearchProtocol!
+    
+    func didPressSaveCity(city: City) {
+        saveCities.append(city)
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -33,25 +45,25 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
         view.backgroundColor = .white
         
         // UI setup
-        setUpCancelButton()
+        setUpDoneButton()
         setUpSearchBar()
         setUpTableView()
     }
     
     // MARK: cancelButton setup
-    func setUpCancelButton() {
-        cancelButton = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(cancelButtonPressed))
-        navigationItem.leftBarButtonItem = cancelButton
+    func setUpDoneButton() {
+        doneButton = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(doneButtonPressed))
+        navigationItem.leftBarButtonItem = doneButton
     }
 
-    @objc func cancelButtonPressed() {
-        cities.removeAll()
-        dismiss(animated: true, completion: nil)
+    @objc func doneButtonPressed() {
+        citiesDelegate.didPressDone(cities: saveCities)
+        navigationController?.popViewController(animated: true)
     }
     
     // MARK: searchBar setup
     func setUpSearchBar() {
-        searchBar = UISearchBar(frame: CGRect(x: padding1, y: padding1, width: view.frame.width - padding1 * 2, height: padding2))
+        searchBar = UISearchBar(frame: CGRect(x: 0, y: padding1, width: view.frame.width, height: padding2))
         searchBar.placeholder = "Search a Location..."
         searchBar.barTintColor = .white
         searchBar.delegate = self
@@ -72,7 +84,7 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
     // MARK: tableView setup
     func setUpTableView() {
-        tableView = UITableView(frame: CGRect(x: 0, y: padding1 * 2 + padding2, width: view.frame.width, height: view.frame.height - (padding1 * 5 + padding2 * 2)))
+        tableView = UITableView(frame: CGRect(x: 0, y: padding1 + padding2, width: view.frame.width, height: view.frame.height - (padding1 + padding2)))
         tableView.delegate = self
         tableView.dataSource = self
         tableView.register(NoteCell.self, forCellReuseIdentifier: "NoteCell")
@@ -91,6 +103,7 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let cityViewController = CityViewController(city: cities[indexPath.row])
+        cityViewController.cityDelegate = self
         navigationController?.pushViewController(cityViewController, animated: true)
     }
     
