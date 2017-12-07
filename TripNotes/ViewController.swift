@@ -7,14 +7,15 @@
 //
 import UIKit
 
-class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, SearchProtocol {
+class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, SearchProtocol, SaveProtocol {
     
     // MARK: UI
     var tableView: UITableView!
     var createNote: UIBarButtonItem!
     
     // MARKL: Cell
-    var cities: [City] = []
+    var saveCities: [City] = []
+    var cityNotes: String = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -37,20 +38,25 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return cities.count
+        return saveCities.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "NoteCell", for: indexPath) as! NoteCell
-        cell.setUpLabelTitle(city: cities[indexPath.row])
+        cell.setUpLabelTitle(city: saveCities[indexPath.row])
         return cell
     }
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            cities.remove(at: indexPath.row)
+            saveCities.remove(at: indexPath.row)
             tableView.deleteRows(at: [indexPath], with: .fade)
         }
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let saveViewController = SaveViewController(city: saveCities[indexPath.row], notes: cityNotes, index: indexPath.row)
+        navigationController?.pushViewController(saveViewController, animated: true)
     }
     
     // MARK: createNote setup
@@ -70,11 +76,15 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     }
     
     // MARK: Delegations
-    func didPressDone(cities: [City]) {
+    func didPressDone(cities: [City], notes: String) {
         for City in cities {
-            self.cities.append(City)
+            self.saveCities.append(City)
         }
+        cityNotes = notes
         tableView.reloadData()
+    }
+    
+    func saveCity(index: Int, notes: String) {
     }
     
     // MARK: Required Swift function

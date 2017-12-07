@@ -1,5 +1,5 @@
 //
-//  CityViewController.swift
+//  SaveViewController.swift
 //  TripNotes
 //
 //  Created by John Park on 12/6/17.
@@ -8,12 +8,12 @@
 
 import UIKit
 
-protocol CityProtocol {
-    func didPressSaveCity(city: City, notes: String)
+protocol SaveProtocol {
+    func saveCity(index: Int, notes: String)
 }
 
-class CityViewController: UIViewController {
-
+class SaveViewController: UIViewController {
+    
     // MARK: Spacing
     let padding1: CGFloat = 75
     let padding2: CGFloat = 8
@@ -29,8 +29,9 @@ class CityViewController: UIViewController {
     var city: City!
     
     // MARK: Delegation
-    var cityDelegate: CityProtocol!
+    var saveDelegate: SaveProtocol!
     var cityNotes: String!
+    var index: Int!
     
     // MARK: Init
     init(city: City) {
@@ -38,10 +39,11 @@ class CityViewController: UIViewController {
         self.city = city
     }
     
-    init(city: City, notes: String) {
+    init(city: City, notes: String, index: Int) {
         super.init(nibName: nil, bundle: nil)
         self.city = city
         cityNotes = notes
+        self.index = index
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -74,7 +76,7 @@ class CityViewController: UIViewController {
     }
     
     @objc func saveCity() {
-        cityDelegate.didPressSaveCity(city: city, notes: userNotes.text!)
+        saveDelegate.saveCity(index: index, notes: cityNotes)
         navigationController?.popViewController(animated: true)
     }
     
@@ -86,7 +88,7 @@ class CityViewController: UIViewController {
         label.font = UIFont(name: "Futura-CondensedExtraBold", size: fontSize)
         view.addSubview(label)
     }
-
+    
     // MARK: noteLabel and userNotes setup
     func setUpNotes() {
         
@@ -105,5 +107,5 @@ class CityViewController: UIViewController {
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
-
+    
 }

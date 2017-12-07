@@ -10,7 +10,7 @@ import Alamofire
 import SwiftyJSON
 
 protocol SearchProtocol {
-    func didPressDone(cities: [City])
+    func didPressDone(cities: [City], notes: String)
 }
 
 class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate, CityProtocol {
@@ -30,9 +30,11 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
     // MARK: Delegations
     var citiesDelegate: SearchProtocol!
+    var cityNotes: String = ""
     
-    func didPressSaveCity(city: City) {
+    func didPressSaveCity(city: City, notes: String) {
         saveCities.append(city)
+        cityNotes = notes
     }
     
     override func viewDidLoad() {
@@ -57,7 +59,7 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
     }
 
     @objc func doneButtonPressed() {
-        citiesDelegate.didPressDone(cities: saveCities)
+        citiesDelegate.didPressDone(cities: saveCities, notes: cityNotes)
         navigationController?.popViewController(animated: true)
     }
     

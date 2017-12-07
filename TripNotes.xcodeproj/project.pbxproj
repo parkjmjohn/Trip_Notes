@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		0D4F1D041FD86BAB003125D3 /* CityViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D4F1D031FD86BAB003125D3 /* CityViewController.swift */; };
+		0D4F1D161FD8CD84003125D3 /* SaveViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D4F1D151FD8CD84003125D3 /* SaveViewController.swift */; };
 		0DA3D7831FCF4AC500A88672 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DA3D7821FCF4AC500A88672 /* AppDelegate.swift */; };
 		0DA3D7851FCF4AC500A88672 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DA3D7841FCF4AC500A88672 /* ViewController.swift */; };
 		0DA3D78A1FCF4AC500A88672 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0DA3D7891FCF4AC500A88672 /* Assets.xcassets */; };
@@ -21,6 +22,7 @@
 
 /* Begin PBXFileReference section */
 		0D4F1D031FD86BAB003125D3 /* CityViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CityViewController.swift; sourceTree = "<group>"; };
+		0D4F1D151FD8CD84003125D3 /* SaveViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaveViewController.swift; sourceTree = "<group>"; };
 		0DA3D77F1FCF4AC500A88672 /* TripNotes.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TripNotes.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0DA3D7821FCF4AC500A88672 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		0DA3D7841FCF4AC500A88672 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -71,6 +73,7 @@
 			children = (
 				0DA3D7821FCF4AC500A88672 /* AppDelegate.swift */,
 				0DA3D7841FCF4AC500A88672 /* ViewController.swift */,
+				0D4F1D151FD8CD84003125D3 /* SaveViewController.swift */,
 				0DA3D7981FCF875A00A88672 /* SearchViewController.swift */,
 				0D4F1D031FD86BAB003125D3 /* CityViewController.swift */,
 				0DA3D7961FCF820600A88672 /* NoteCell.swift */,
@@ -231,6 +234,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				0DAA5D291FD7A90C001E37ED /* NetworkManager.swift in Sources */,
+				0D4F1D161FD8CD84003125D3 /* SaveViewController.swift in Sources */,
 				0DA3D7971FCF820600A88672 /* NoteCell.swift in Sources */,
 				0DA3D7851FCF4AC500A88672 /* ViewController.swift in Sources */,
 				0DA3D7A11FD08E3500A88672 /* City.swift in Sources */,
