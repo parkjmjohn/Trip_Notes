@@ -23,7 +23,7 @@ class SaveViewController: UIViewController {
     var saveButton: UIBarButtonItem!
     var label: UILabel!
     var noteLabel: UILabel!
-    var userNotes: UITextField!
+    var userNotes: UITextView!
     
     // MARK: Data
     var city: City!
@@ -98,9 +98,9 @@ class SaveViewController: UIViewController {
         noteLabel.text = "Notes:"
         view.addSubview(noteLabel)
         
-        userNotes = UITextField(frame: CGRect(x: padding2, y: view.center.y + padding1 * 3.3, width: view.frame.width - padding2 * 2, height: padding1 * 1.5))
-        userNotes.borderStyle = .roundedRect
-        userNotes.tintColor = .black
+        userNotes = UITextView(frame: CGRect(x: padding2, y: view.center.y + padding1 * 3.3, width: view.frame.width - padding2 * 2, height: padding1 * 1.5))
+        userNotes.font = UIFont(name: "AmericanTypewriter ", size: fontSize / 2)
+        userNotes.textColor = .blue
         userNotes.text = cityNotes
         view.addSubview(userNotes)
     }
