@@ -46,6 +46,13 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         return cell
     }
     
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            cities.remove(at: indexPath.row)
+            tableView.deleteRows(at: [indexPath], with: .fade)
+        }
+    }
+    
     // MARK: createNote setup
     func setUpCreateNote() {
         createNote = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(createNotePressed))
