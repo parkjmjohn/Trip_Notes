@@ -64,6 +64,8 @@ class CityViewController: UIViewController {
         if let range = str.range(of: ",") {
             let ret = str[..<range.lowerBound]
             title = String(ret).uppercased()
+        } else {
+            title = str.uppercased()
         }
     }
     
