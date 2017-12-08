@@ -11,14 +11,12 @@ struct City {
     
     // MARK: title
     var label: String
-    var notes: String
-    var weather: Weather
+    var notes: String 
     
     // MARK: init
-    init(label: String, notes: String, weather: Weather) {
+    init(label: String, notes: String) {
         self.label = label
         self.notes = notes
-        self.weather = weather
     }
     
     struct Weather {
