@@ -98,7 +98,7 @@ class SaveViewController: UIViewController {
         view.addSubview(noteLabel)
         
         userNotes = UITextView(frame: CGRect(x: padding2, y: view.center.y + padding1 * 3.3, width: view.frame.width - padding2 * 2, height: padding1 * 1.5))
-        userNotes.font = UIFont(name: "AmericanTypewriter ", size: fontSize / 2)
+        userNotes.font = UIFont(name: "AmericanTypewriter ", size: 15.0)
         userNotes.textColor = .blue
         userNotes.text = city.notes
         view.addSubview(userNotes)
