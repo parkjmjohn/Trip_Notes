@@ -115,12 +115,11 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
 //FIX - USE NETWORK MANAGER INSTEAD
     func getCities(input: String) {
         // GoogleAPI
-        let googlePlacesAPI: String = "https://maps.googleapis.com/maps/api/place/autocomplete/json?"
-        let space: String = "%20"
-        let googleAPIkey: String = "&key=AIzaSyCympdqfdlfyrj-tJ8XzE5YFiWpaZCD8pU"
-        
-        let input: String = "input=" + input.replacingOccurrences(of: " ", with: space)
-        let url: String = googlePlacesAPI + input + googleAPIkey
+        let googlePlacesAPI = "https://maps.googleapis.com/maps/api/place/autocomplete/json?"
+        let space = "%20"
+        let googleAPIkey = "&key=AIzaSyCympdqfdlfyrj-tJ8XzE5YFiWpaZCD8pU"
+        let input = "input=" + input.replacingOccurrences(of: " ", with: space)
+        let url = googlePlacesAPI + input + googleAPIkey
         Alamofire.request(url, method: .get)
             .validate()
             .responseJSON { response in

@@ -62,8 +62,7 @@ class SaveViewController: UIViewController {
         // title
         let str: String = label.text!
         if let range = str.range(of: ",") {
-            let ret = str[..<range.lowerBound]
-            title = String(ret).uppercased()
+            title = String(str[..<range.lowerBound]).uppercased()
         } else {
             title = str.uppercased()
         }
@@ -98,7 +97,7 @@ class SaveViewController: UIViewController {
         view.addSubview(noteLabel)
         
         userNotes = UITextView(frame: CGRect(x: padding2, y: view.center.y + padding1 * 3.3, width: view.frame.width - padding2 * 2, height: padding1 * 1.5))
-        userNotes.font = UIFont(name: "AmericanTypewriter ", size: 15.0)
+        userNotes.font = UIFont(name: "AmericanTypewriter ", size: 18.0)
         userNotes.textColor = .blue
         userNotes.text = city.notes
         view.addSubview(userNotes)

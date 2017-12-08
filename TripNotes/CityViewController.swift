@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import Alamofire
+import SwiftyJSON
 
 protocol CityProtocol {
     func didPressSaveCity(city: City)
@@ -55,8 +57,7 @@ class CityViewController: UIViewController {
         // title
         let str: String = label.text!
         if let range = str.range(of: ",") {
-            let ret = str[..<range.lowerBound]
-            title = String(ret).uppercased()
+            title = String(str[..<range.lowerBound]).uppercased()
         } else {
             title = str.uppercased()
         }
@@ -69,9 +70,7 @@ class CityViewController: UIViewController {
     }
     
     @objc func saveCity() {
-        print(userNotes.text)
         city.notes = userNotes.text
-        print(userNotes.text)
         cityDelegate.didPressSaveCity(city: city)
         navigationController?.popViewController(animated: true)
     }
@@ -93,7 +92,7 @@ class CityViewController: UIViewController {
         view.addSubview(noteLabel)
         
         userNotes = UITextView(frame: CGRect(x: padding2, y: view.center.y + padding1 * 3.3, width: view.frame.width - padding2 * 2, height: padding1 * 1.5))
-        userNotes.font = UIFont(name: "AmericanTypewriter ", size: 15.0)
+        userNotes.font = UIFont(name: "AmericanTypewriter ", size: 18.0)
         userNotes.textColor = .blue
         userNotes.text = city.notes
         view.addSubview(userNotes)
@@ -103,5 +102,24 @@ class CityViewController: UIViewController {
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
-
+    
+//FIX - USE NETWORK MANAGER INSTEAD
+    func getForecast(input: String) {
+        let apixiAPI = "https://api.apixu.com/v1/forecast.json?"
+        let space = "%20"
+        let apixiKey = "key=04bbf229c12940a49e8173840170812"
+        let input = "q=" + input.replacingOccurrences(of: " ", with: space)
+        let url = apixiAPI + apixiKey + input
+        Alamofire.request(url, method: .get)
+            .validate()
+            .responseJSON { response in
+                switch response.result {
+                case let .success(data):
+                    let json = JSON(data)
+                case .failure(let error):
+                    print(error.localizedDescription)
+                }
+        }
+    }
+    
 }
