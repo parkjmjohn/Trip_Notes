@@ -9,7 +9,7 @@
 import UIKit
 
 protocol CityProtocol {
-    func didPressSaveCity(city: City, notes: String)
+    func didPressSaveCity(city: City)
 }
 
 class CityViewController: UIViewController {
@@ -30,18 +30,11 @@ class CityViewController: UIViewController {
     
     // MARK: Delegation
     var cityDelegate: CityProtocol!
-    var cityNotes: String!
     
     // MARK: Init
     init(city: City) {
         super.init(nibName: nil, bundle: nil)
         self.city = city
-    }
-    
-    init(city: City, notes: String) {
-        super.init(nibName: nil, bundle: nil)
-        self.city = city
-        cityNotes = notes
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -76,7 +69,10 @@ class CityViewController: UIViewController {
     }
     
     @objc func saveCity() {
-        cityDelegate.didPressSaveCity(city: city, notes: userNotes.text!)
+        print(userNotes.text)
+        city.notes = userNotes.text
+        print(userNotes.text)
+        cityDelegate.didPressSaveCity(city: city)
         navigationController?.popViewController(animated: true)
     }
     
@@ -99,7 +95,7 @@ class CityViewController: UIViewController {
         userNotes = UITextView(frame: CGRect(x: padding2, y: view.center.y + padding1 * 3.3, width: view.frame.width - padding2 * 2, height: padding1 * 1.5))
         userNotes.font = UIFont(name: "AmericanTypewriter ", size: fontSize / 2)
         userNotes.textColor = .blue
-        userNotes.text = cityNotes
+        userNotes.text = city.notes
         view.addSubview(userNotes)
     }
     

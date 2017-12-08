@@ -9,7 +9,7 @@
 import UIKit
 
 protocol SaveProtocol {
-    func saveCity(index: Int, notes: String)
+    func saveCity(index: Int, city: City)
 }
 
 class SaveViewController: UIViewController {
@@ -30,7 +30,6 @@ class SaveViewController: UIViewController {
     
     // MARK: Delegation
     var saveDelegate: SaveProtocol!
-    var cityNotes: String!
     var index: Int!
     
     // MARK: Init
@@ -39,10 +38,9 @@ class SaveViewController: UIViewController {
         self.city = city
     }
     
-    init(city: City, notes: String, index: Int) {
+    init(city: City, index: Int) {
         super.init(nibName: nil, bundle: nil)
         self.city = city
-        cityNotes = notes
         self.index = index
     }
     
@@ -78,7 +76,8 @@ class SaveViewController: UIViewController {
     }
     
     @objc func saveCity() {
-        saveDelegate.saveCity(index: index, notes: cityNotes)
+        city.notes = userNotes.text
+        saveDelegate.saveCity(index: index, city: city)
         navigationController?.popViewController(animated: true)
     }
     
@@ -101,7 +100,7 @@ class SaveViewController: UIViewController {
         userNotes = UITextView(frame: CGRect(x: padding2, y: view.center.y + padding1 * 3.3, width: view.frame.width - padding2 * 2, height: padding1 * 1.5))
         userNotes.font = UIFont(name: "AmericanTypewriter ", size: fontSize / 2)
         userNotes.textColor = .blue
-        userNotes.text = cityNotes
+        userNotes.text = city.notes
         view.addSubview(userNotes)
     }
     

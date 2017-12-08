@@ -33,7 +33,7 @@ class NetworkManager {
                         while counter != json["predictions"].array?.count {
                             let ret: String = (json["predictions"].array?[counter]["description"].string)!
                             print(ret)
-                            cities.append(City(label: ret))
+                            cities.append(City(label: ret, notes: ""))
                             counter += 1
                         }
                     }

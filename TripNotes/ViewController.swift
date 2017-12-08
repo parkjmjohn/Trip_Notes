@@ -15,7 +15,6 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     // MARKL: Cell
     var saveCities: [City] = []
-    var cityNotes: String = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -55,7 +54,8 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let saveViewController = SaveViewController(city: saveCities[indexPath.row], notes: cityNotes, index: indexPath.row)
+        let saveViewController = SaveViewController(city: saveCities[indexPath.row], index: indexPath.row)
+        saveViewController.saveDelegate = self
         navigationController?.pushViewController(saveViewController, animated: true)
     }
     
@@ -76,15 +76,15 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     }
     
     // MARK: Delegations
-    func didPressDone(cities: [City], notes: String) {
+    func didPressDone(cities: [City]) {
         for City in cities {
             self.saveCities.append(City)
         }
-        cityNotes = notes
         tableView.reloadData()
     }
     
-    func saveCity(index: Int, notes: String) {
+    func saveCity(index: Int, city: City) {
+        saveCities[index] = city
     }
     
     // MARK: Required Swift function

@@ -10,7 +10,7 @@ import Alamofire
 import SwiftyJSON
 
 protocol SearchProtocol {
-    func didPressDone(cities: [City], notes: String)
+    func didPressDone(cities: [City])
 }
 
 class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate, CityProtocol {
@@ -30,11 +30,9 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
     // MARK: Delegations
     var citiesDelegate: SearchProtocol!
-    var cityNotes: String = ""
     
-    func didPressSaveCity(city: City, notes: String) {
+    func didPressSaveCity(city: City) {
         saveCities.append(city)
-        cityNotes = notes
     }
     
     override func viewDidLoad() {
@@ -59,7 +57,7 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
     }
 
     @objc func doneButtonPressed() {
-        citiesDelegate.didPressDone(cities: saveCities, notes: cityNotes)
+        citiesDelegate.didPressDone(cities: saveCities)
         navigationController?.popViewController(animated: true)
     }
     
@@ -134,7 +132,7 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
                         var counter: Int = 0
                         while counter != json["predictions"].array?.count {
                             let ret: String = (json["predictions"].array?[counter]["description"].string)!
-                            self.cities.append(City(label: ret))
+                            self.cities.append(City(label: ret, notes: ""))
                             counter += 1
                         }
                         self.tableView.reloadData()
