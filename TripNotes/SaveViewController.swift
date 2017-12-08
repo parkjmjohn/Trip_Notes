@@ -91,7 +91,6 @@ class SaveViewController: UIViewController {
     
     // MARK: noteLabel and userNotes setup
     func setUpNotes() {
-        
         noteLabel = UILabel(frame: CGRect(x: padding2, y: (view.center.y + padding1 * 3.3) - fontSize, width: view.frame.width - padding2 * 2, height: fontSize))
         noteLabel.text = "Notes:"
         view.addSubview(noteLabel)
