@@ -6,16 +6,16 @@
 //  Copyright © 2017 John Park. All rights reserved.
 //
 
-import UIKit
+import Foundation
 
 struct Weather {
-    var hour: Int
-    var hourTemp: String
+    var hour: String
+    var hourTemp: Int
     var hourRain: String
     var hourText: String
-    var hourImg: UIImage
+    var hourImg: String
     
-    init(hour: Int, hourTemp: String, hourRain: String, hourText: String, hourImg: UIImage) {
+    init(hour: String, hourTemp: Int, hourRain: String, hourText: String, hourImg: String) {
         self.hour = hour
         self.hourTemp = hourTemp
         self.hourRain = hourRain

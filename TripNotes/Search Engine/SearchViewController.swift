@@ -131,7 +131,7 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
                         var counter: Int = 0
                         while counter != json["predictions"].array?.count {
                             let ret: String = (json["predictions"].array?[counter]["description"].string)!
-                            self.cities.append(City(label: ret, notes: "", time: ""))
+                            self.cities.append(City(label: ret, notes: "", time: "", weather: []))
                             counter += 1
                         }
                         self.tableView.reloadData()

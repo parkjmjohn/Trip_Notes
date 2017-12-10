@@ -131,13 +131,21 @@ class CityViewController: UIViewController {
                     let json = JSON(data)
                     if let time = json["location"]["localtime"].string {
                         self.city.time = "Time: " + time
-                        
+                        var counter: Int = 0
+                        while counter < 24 {
+                            let hour: String = (json["forecast"]["forecastday"][0]["hour"].array?[counter]["time"].string)!
+                            let hourTemp: Int = (json["forecast"]["forecastday"][0]["hour"].array?[counter]["temp_f"].int)!
+                            let hourRain: String = (json["forecast"]["forecastday"][0]["hour"].array?[counter]["chance_of_rain"].string)!
+                            let hourText: String = (json["forecast"]["forecastday"][0]["hour"].array?[counter]["condition"]["text"].string)!
+                            let hourImg: String =  (json["forecast"]["forecastday"][0]["hour"].array?[counter]["condition"]["icon"].string)!
+                            self.city.weather.append(Weather(hour: hour, hourTemp: hourTemp, hourRain: hourRain, hourText: hourText, hourImg: hourImg))
+                            counter += 1
+                        }
                     } else {
                         self.city.time = "Time: N/A"
+//                        self.city.weather.append(Weather(hour: "N/A", hourTemp: 0, hourRain: "N/A", hourText: "N/A", hourImg: "N/A"))
                     }
                     self.timeLabel.text = self.city.time
-//                    var counter: Int = 0
-//                    while counter != json["forecast"]["forecastday"].array?
                 case .failure(let error):
                     print(error.localizedDescription)
                 }
