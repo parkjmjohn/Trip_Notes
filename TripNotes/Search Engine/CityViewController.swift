@@ -5,7 +5,6 @@
 //  Created by John Park on 12/6/17.
 //  Copyright © 2017 John Park. All rights reserved.
 //
-
 import UIKit
 import Alamofire
 import SwiftyJSON
@@ -14,13 +13,12 @@ protocol CityProtocol {
     func didPressSaveCity(city: City)
 }
 
-class CityViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource {
-
+class CityViewController: UIViewController {
+    
     // MARK: Spacing
     let padding1: CGFloat = 75
     let padding2: CGFloat = 8
     let padding3: CGFloat = 12
-    let padding4: CGFloat = 150
     let fontSize: CGFloat = 20
     
     // MARK: UI
@@ -29,7 +27,6 @@ class CityViewController: UIViewController, UICollectionViewDelegate, UICollecti
     var noteLabel: UILabel!
     var userNotes: UITextView!
     var timeLabel: UILabel!
-    var weatherView: UICollectionView!
     
     // MARK: Data
     var city: City!
@@ -52,12 +49,11 @@ class CityViewController: UIViewController, UICollectionViewDelegate, UICollecti
         
         // background color
         view.backgroundColor = .white
-
+        
         // UI setup
         setUpSaveButton()
         setUpLabels()
         setUpNotes()
-        setUpWeatherView()
         
         // title
         let str: String = label.text!
@@ -66,7 +62,7 @@ class CityViewController: UIViewController, UICollectionViewDelegate, UICollecti
         } else {
             title = str.uppercased()
         }
-    
+        
         // Network
         setUpTimeLabel()
         getForecast(input: title!)
@@ -92,7 +88,7 @@ class CityViewController: UIViewController, UICollectionViewDelegate, UICollecti
         label.font = UIFont(name: "Futura-CondensedExtraBold", size: fontSize)
         view.addSubview(label)
     }
-
+    
     // MARK: noteLabel and userNotes setup
     func setUpNotes() {
         noteLabel = UILabel(frame: CGRect(x: padding2, y: (view.center.y + padding1 * 3.3) - fontSize, width: view.frame.width - padding2 * 2, height: fontSize + 2))
@@ -114,31 +110,12 @@ class CityViewController: UIViewController, UICollectionViewDelegate, UICollecti
         view.addSubview(timeLabel)
     }
     
-    // MARK: weatherView setup
-    func setUpWeatherView() {
-        weatherView = UICollectionView(frame: CGRect(x: 0, y: padding1 * 1.5 + fontSize + padding3, width: view.frame.width, height: padding4))
-        weatherView.delegate = self
-        weatherView.dataSource = self
-        weatherView.register(WeatherViewCell.self, forCellWithReuseIdentifier: "WeatherViewCell")
-        view.addSubview(weatherView)
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return city.weather.count
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = weatherView.dequeueReusableCell(withReuseIdentifier: "WeatherViewCell", for: indexPath)
-        cell.backgroundColor = .blue
-        return cell
-    }
-    
     // MARK: Required Swift function
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
     
-//FIX - USE NETWORK MANAGER INSTEAD
+    //FIX - USE NETWORK MANAGER INSTEAD
     func getForecast(input: String) {
         let apixiAPI = "https://api.apixu.com/v1/forecast.json?"
         let space = "%20"
