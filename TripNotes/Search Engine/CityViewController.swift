@@ -14,12 +14,13 @@ protocol CityProtocol {
     func didPressSaveCity(city: City)
 }
 
-class CityViewController: UIViewController {
+class CityViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource {
 
     // MARK: Spacing
     let padding1: CGFloat = 75
     let padding2: CGFloat = 8
     let padding3: CGFloat = 12
+    let padding4: CGFloat = 150
     let fontSize: CGFloat = 20
     
     // MARK: UI
@@ -28,6 +29,7 @@ class CityViewController: UIViewController {
     var noteLabel: UILabel!
     var userNotes: UITextView!
     var timeLabel: UILabel!
+    var weatherView: UICollectionView!
     
     // MARK: Data
     var city: City!
@@ -55,6 +57,7 @@ class CityViewController: UIViewController {
         setUpSaveButton()
         setUpLabels()
         setUpNotes()
+        setUpWeatherView()
         
         // title
         let str: String = label.text!
@@ -109,6 +112,25 @@ class CityViewController: UIViewController {
         timeLabel.text = "Searching..."
         timeLabel.font = UIFont(name: "Futura-CondensedExtraBold", size: fontSize / 1.5)
         view.addSubview(timeLabel)
+    }
+    
+    // MARK: weatherView setup
+    func setUpWeatherView() {
+        weatherView = UICollectionView(frame: CGRect(x: 0, y: padding1 * 1.5 + fontSize + padding3, width: view.frame.width, height: padding4))
+        weatherView.delegate = self
+        weatherView.dataSource = self
+        weatherView.register(WeatherViewCell.self, forCellWithReuseIdentifier: "WeatherViewCell")
+        view.addSubview(weatherView)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return city.weather.count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = weatherView.dequeueReusableCell(withReuseIdentifier: "WeatherViewCell", for: indexPath)
+        cell.backgroundColor = .blue
+        return cell
     }
     
     // MARK: Required Swift function
