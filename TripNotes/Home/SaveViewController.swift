@@ -17,6 +17,7 @@ class SaveViewController: UIViewController {
     // MARK: Spacing
     let padding1: CGFloat = 75
     let padding2: CGFloat = 8
+    let padding3: CGFloat = 12
     let fontSize: CGFloat = 20
     
     // MARK: UI
@@ -24,6 +25,7 @@ class SaveViewController: UIViewController {
     var label: UILabel!
     var noteLabel: UILabel!
     var userNotes: UITextView!
+    var timeLabel: UILabel!
     
     // MARK: Data
     var city: City!
@@ -58,6 +60,7 @@ class SaveViewController: UIViewController {
         setUpSaveButton()
         setUpLabel()
         setUpNotes()
+        setUpTimeLabel()
         
         // title
         let str: String = label.text!
@@ -100,6 +103,14 @@ class SaveViewController: UIViewController {
         userNotes.textColor = .blue
         userNotes.text = city.notes
         view.addSubview(userNotes)
+    }
+    
+    // MARK: timeLabel setup
+    func setUpTimeLabel() {
+        timeLabel = UILabel(frame: CGRect(x: padding3, y: padding1 + fontSize + padding3, width: view.frame.width - padding3 * 2, height: fontSize / 1.2 + 2))
+        timeLabel.text = city.time
+        timeLabel.font = UIFont(name: "Futura-CondensedExtraBold", size: fontSize / 1.5)
+        view.addSubview(timeLabel)
     }
     
     // MARK: Required Swift function

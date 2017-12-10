@@ -19,6 +19,7 @@ class CityViewController: UIViewController {
     // MARK: Spacing
     let padding1: CGFloat = 75
     let padding2: CGFloat = 8
+    let padding3: CGFloat = 12
     let fontSize: CGFloat = 20
     
     // MARK: UI
@@ -26,6 +27,7 @@ class CityViewController: UIViewController {
     var label: UILabel!
     var noteLabel: UILabel!
     var userNotes: UITextView!
+    var timeLabel: UILabel!
     
     // MARK: Data
     var city: City!
@@ -48,10 +50,10 @@ class CityViewController: UIViewController {
         
         // background color
         view.backgroundColor = .white
-        
+
         // UI setup
         setUpSaveButton()
-        setUpLabel()
+        setUpLabels()
         setUpNotes()
         
         // title
@@ -61,6 +63,10 @@ class CityViewController: UIViewController {
         } else {
             title = str.uppercased()
         }
+    
+        // Network
+        setUpTimeLabel()
+        getForecast(input: title!)
     }
     
     // MARK: saveButton setup
@@ -75,8 +81,8 @@ class CityViewController: UIViewController {
         navigationController?.popViewController(animated: true)
     }
     
-    // MARK: label setup
-    func setUpLabel() {
+    // MARK: labels setup
+    func setUpLabels() {
         label = UILabel(frame: CGRect(x: 0, y: padding1, width: view.frame.width, height: fontSize + 4))
         label.textAlignment = .center
         label.text = city.label
@@ -86,7 +92,6 @@ class CityViewController: UIViewController {
 
     // MARK: noteLabel and userNotes setup
     func setUpNotes() {
-        
         noteLabel = UILabel(frame: CGRect(x: padding2, y: (view.center.y + padding1 * 3.3) - fontSize, width: view.frame.width - padding2 * 2, height: fontSize + 2))
         noteLabel.text = "Notes:"
         view.addSubview(noteLabel)
@@ -96,6 +101,14 @@ class CityViewController: UIViewController {
         userNotes.textColor = .blue
         userNotes.text = city.notes
         view.addSubview(userNotes)
+    }
+    
+    // MARK: timeLabel setup
+    func setUpTimeLabel() {
+        timeLabel = UILabel(frame: CGRect(x: padding3, y: padding1 + fontSize + padding3, width: view.frame.width - padding3 * 2, height: fontSize / 1.2 + 2))
+        timeLabel.text = "Searching..."
+        timeLabel.font = UIFont(name: "Futura-CondensedExtraBold", size: fontSize / 1.5)
+        view.addSubview(timeLabel)
     }
     
     // MARK: Required Swift function
@@ -108,7 +121,7 @@ class CityViewController: UIViewController {
         let apixiAPI = "https://api.apixu.com/v1/forecast.json?"
         let space = "%20"
         let apixiKey = "key=04bbf229c12940a49e8173840170812"
-        let input = "q=" + input.replacingOccurrences(of: " ", with: space)
+        let input = "&q=" + input.replacingOccurrences(of: " ", with: space)
         let url = apixiAPI + apixiKey + input
         Alamofire.request(url, method: .get)
             .validate()
@@ -116,6 +129,15 @@ class CityViewController: UIViewController {
                 switch response.result {
                 case let .success(data):
                     let json = JSON(data)
+                    if let time = json["location"]["localtime"].string {
+                        self.city.time = "Time: " + time
+                        
+                    } else {
+                        self.city.time = "Time: N/A"
+                    }
+                    self.timeLabel.text = self.city.time
+//                    var counter: Int = 0
+//                    while counter != json["forecast"]["forecastday"].array?
                 case .failure(let error):
                     print(error.localizedDescription)
                 }

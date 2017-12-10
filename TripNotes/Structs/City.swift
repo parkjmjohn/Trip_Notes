@@ -11,12 +11,14 @@ struct City {
     
     // MARK: title
     var label: String
-    var notes: String 
+    var notes: String
+    var time: String
     
     // MARK: init
-    init(label: String, notes: String) {
+    init(label: String, notes: String, time: String) {
         self.label = label
         self.notes = notes
+        self.time = time
     }
     
 }

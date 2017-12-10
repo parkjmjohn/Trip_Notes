@@ -9,15 +9,13 @@
 import UIKit
 
 struct Weather {
-    var time: String
-    var hour: String
+    var hour: Int
     var hourTemp: String
     var hourRain: String
     var hourText: String
     var hourImg: UIImage
     
-    init(time: String, hour: String, hourTemp: String, hourRain: String, hourText: String, hourImg: UIImage) {
-        self.time = time
+    init(hour: Int, hourTemp: String, hourRain: String, hourText: String, hourImg: UIImage) {
         self.hour = hour
         self.hourTemp = hourTemp
         self.hourRain = hourRain
