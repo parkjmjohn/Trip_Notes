@@ -235,7 +235,7 @@ class CityViewController: UIViewController, UICollectionViewDataSource, UICollec
                 }
         }
     }
-    
+//FIX - USE NETWORK MANAGER INSTEAD
     func getPicture(input: String) {
         let url = "https://source.unsplash.com/1600x900/?" + input
         Alamofire.request(url).responseData { response in
