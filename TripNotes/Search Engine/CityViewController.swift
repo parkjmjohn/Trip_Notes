@@ -13,12 +13,13 @@ protocol CityProtocol {
     func didPressSaveCity(city: City)
 }
 
-class CityViewController: UIViewController {
+class CityViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
     // MARK: Spacing
     let padding1: CGFloat = 75
     let padding2: CGFloat = 8
     let padding3: CGFloat = 12
+    let padding4: CGFloat = 150
     let fontSize: CGFloat = 20
     
     // MARK: UI
@@ -27,6 +28,7 @@ class CityViewController: UIViewController {
     var noteLabel: UILabel!
     var userNotes: UITextView!
     var timeLabel: UILabel!
+    var weatherView: UICollectionView!
     
     // MARK: Data
     var city: City!
@@ -53,6 +55,7 @@ class CityViewController: UIViewController {
         // UI setup
         setUpSaveButton()
         setUpLabels()
+        setUpWeatherView()
         setUpNotes()
         
         // title
@@ -96,7 +99,10 @@ class CityViewController: UIViewController {
         view.addSubview(noteLabel)
         
         userNotes = UITextView(frame: CGRect(x: padding2, y: view.center.y + padding1 * 3.3, width: view.frame.width - padding2 * 2, height: padding1 * 1.5))
-        userNotes.font = UIFont(name: "AmericanTypewriter ", size: 18.0)
+        userNotes.layer.cornerRadius = padding2
+        userNotes.layer.borderColor = UIColor(red: 0.2, green: 0.2, blue: 0.2, alpha: 1).cgColor
+        userNotes.layer.borderWidth = 1.0
+        userNotes.font = UIFont(name: "AmericanTypewriter", size: 18.0)
         userNotes.textColor = .blue
         userNotes.text = city.notes
         view.addSubview(userNotes)
@@ -110,12 +116,44 @@ class CityViewController: UIViewController {
         view.addSubview(timeLabel)
     }
     
+    // MARK: weatherView setup
+    func setUpWeatherView() {
+        weatherView = UICollectionView(frame: CGRect(x: 0, y: padding1 * 1.5 + fontSize + padding3, width: view.frame.width, height: padding4), collectionViewLayout: UICollectionViewFlowLayout())
+        weatherView.backgroundColor = .white
+        weatherView.register(WeatherViewCell.self, forCellWithReuseIdentifier: "WeatherViewCell")
+        weatherView.delegate = self
+        weatherView.dataSource = self
+        
+        // setting horizontal scroll view
+        let layout = UICollectionViewFlowLayout()
+        layout.scrollDirection = .horizontal
+        self.weatherView.collectionViewLayout = layout
+        weatherView.showsHorizontalScrollIndicator = false
+        
+        view.addSubview(weatherView)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return city.weather.count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = weatherView.dequeueReusableCell(withReuseIdentifier: "WeatherViewCell", for: indexPath) as! WeatherViewCell
+        cell.backgroundColor = UIColor(red: 0.9, green: 0.9, blue: 0.9, alpha: 1)
+        cell.setUpWeather(weather: city.weather[indexPath.row])
+        return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width: padding4, height: padding4)
+    }
+    
     // MARK: Required Swift function
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
     
-    //FIX - USE NETWORK MANAGER INSTEAD
+//FIX - USE NETWORK MANAGER INSTEAD
     func getForecast(input: String) {
         let apixiAPI = "https://api.apixu.com/v1/forecast.json?"
         let space = "%20"
@@ -140,6 +178,7 @@ class CityViewController: UIViewController {
                             self.city.weather.append(Weather(hour: hour, hourTemp: hourTemp, hourRain: hourRain, hourText: hourText, hourImg: hourImg))
                             counter += 1
                         }
+                        self.weatherView.reloadData()
                     } else {
                         self.city.time = "Time: N/A"
 //                        self.city.weather.append(Weather(hour: "N/A", hourTemp: 0, hourRain: "N/A", hourText: "N/A", hourImg: "N/A"))
