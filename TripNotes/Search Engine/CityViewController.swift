@@ -13,7 +13,7 @@ protocol CityProtocol {
     func didPressSaveCity(city: City)
 }
 
-class CityViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+class CityViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, UIPickerViewDelegate, UIPickerViewDataSource {
     
     // MARK: Spacing
     let padding1: CGFloat = 75
@@ -30,10 +30,12 @@ class CityViewController: UIViewController, UICollectionViewDataSource, UICollec
     var timeLabel: UILabel!
     var weatherView: UICollectionView!
     var picture: UIImageView!
-//    var priorityChooser: UIPickerView!
+    var priorityLabel: UILabel!
+    var priorityChooser: UIPickerView!
     
     // MARK: Data
     var city: City!
+    let priorities = ["High", "Medium", "Low"]
     
     // MARK: Delegation
     var cityDelegate: CityProtocol!
@@ -59,7 +61,7 @@ class CityViewController: UIViewController, UICollectionViewDataSource, UICollec
         setUpLabels()
         setUpWeatherView()
         setUpNotes()
-//        setUpPriorityChooser()
+        setUpPriorityChooser()
         
         // title
         let str: String = label.text!
@@ -95,6 +97,15 @@ class CityViewController: UIViewController, UICollectionViewDataSource, UICollec
         label.text = city.label
         label.font = UIFont(name: "Futura-CondensedExtraBold", size: fontSize)
         view.addSubview(label)
+        
+        priorityLabel = UILabel(frame: CGRect(x: padding3, y: padding1 * 1.9 + fontSize + padding3 + padding4 * 2, width: view.frame.width - padding3 * 2, height: fontSize + 4))
+        updatePriorityLabel()
+        priorityLabel.font = UIFont(name: "Futura-CondensedExtraBold", size: fontSize)
+        view.addSubview(priorityLabel)
+    }
+    
+    func updatePriorityLabel() {
+        priorityLabel.text = "Priority: " + city.priority
     }
     
     // MARK: noteLabel and userNotes setup
@@ -154,12 +165,35 @@ class CityViewController: UIViewController, UICollectionViewDataSource, UICollec
     
     // MARK: Picture setup
     func setUpPicture() {
-        picture = UIImageView(frame: CGRect(x: 0, y: padding1 * 2 + fontSize + padding3 + padding4, width: view.frame.width, height: padding4))
+        picture = UIImageView(frame: CGRect(x: 0, y: padding1 * 1.75 + fontSize + padding3 + padding4, width: view.frame.width, height: padding4))
         picture.contentMode = .scaleAspectFit
         view.addSubview(picture)
     }
     
+    // MARK: Priority setup
+    func setUpPriorityChooser() {
+        priorityChooser = UIPickerView(frame: CGRect(x: 0, y: padding1 * 1.9 + fontSize + padding3 + padding4 * 2, width: view.frame.width, height: padding4))
+        priorityChooser.dataSource = self
+        priorityChooser.delegate = self
+        view.addSubview(priorityChooser)
+    }
     
+    func numberOfComponents(in pickerView: UIPickerView) -> Int {
+        return 1
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        return priorities.count
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+        return priorities[row]
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        city.priority = priorities[row]
+        updatePriorityLabel()
+    }
     
     // MARK: Required Swift function
     override func didReceiveMemoryWarning() {

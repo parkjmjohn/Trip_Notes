@@ -15,14 +15,16 @@ struct City {
     var time: String
     var weather: [Weather]
     var picture: [UIImage]
+    var priority: String
     
     // MARK: init
-    init(label: String, notes: String, time: String, weather: [Weather], picture: [UIImage]) {
+    init(label: String, notes: String, time: String, weather: [Weather], picture: [UIImage], priority: String) {
         self.label = label
         self.notes = notes
         self.time = time
         self.weather = weather
         self.picture = picture
+        self.priority = priority
     }
     
 }

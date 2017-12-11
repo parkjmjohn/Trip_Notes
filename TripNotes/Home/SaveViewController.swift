@@ -155,7 +155,7 @@ class SaveViewController: UIViewController, UICollectionViewDataSource, UICollec
     
     // MARK: Picture setup
     func setUpPicture() {
-        picture = UIImageView(frame: CGRect(x: 0, y: padding1 * 2 + fontSize + padding3 + padding4, width: view.frame.width, height: padding4))
+        picture = UIImageView(frame: CGRect(x: 0, y: padding1 * 1.75 + fontSize + padding3 + padding4, width: view.frame.width, height: padding4))
         picture.contentMode = .scaleAspectFit
         picture.image = city.picture[0]
         view.addSubview(picture)
