@@ -29,6 +29,8 @@ class CityViewController: UIViewController, UICollectionViewDataSource, UICollec
     var userNotes: UITextView!
     var timeLabel: UILabel!
     var weatherView: UICollectionView!
+    var picture: UIImageView!
+//    var priorityChooser: UIPickerView!
     
     // MARK: Data
     var city: City!
@@ -57,6 +59,7 @@ class CityViewController: UIViewController, UICollectionViewDataSource, UICollec
         setUpLabels()
         setUpWeatherView()
         setUpNotes()
+//        setUpPriorityChooser()
         
         // title
         let str: String = label.text!
@@ -69,6 +72,8 @@ class CityViewController: UIViewController, UICollectionViewDataSource, UICollec
         // Network
         setUpTimeLabel()
         getForecast(input: title!)
+        setUpPicture()
+        getPicture(input: title!)
     }
     
     // MARK: saveButton setup
@@ -129,7 +134,6 @@ class CityViewController: UIViewController, UICollectionViewDataSource, UICollec
         layout.scrollDirection = .horizontal
         self.weatherView.collectionViewLayout = layout
         weatherView.showsHorizontalScrollIndicator = false
-        
         view.addSubview(weatherView)
     }
     
@@ -147,6 +151,15 @@ class CityViewController: UIViewController, UICollectionViewDataSource, UICollec
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: padding4, height: padding4)
     }
+    
+    // MARK: Picture setup
+    func setUpPicture() {
+        picture = UIImageView(frame: CGRect(x: 0, y: padding1 * 2 + fontSize + padding3 + padding4, width: view.frame.width, height: padding4))
+        picture.contentMode = .scaleAspectFit
+        view.addSubview(picture)
+    }
+    
+    
     
     // MARK: Required Swift function
     override func didReceiveMemoryWarning() {
@@ -181,7 +194,6 @@ class CityViewController: UIViewController, UICollectionViewDataSource, UICollec
                         self.weatherView.reloadData()
                     } else {
                         self.city.time = "Time: N/A"
-//                        self.city.weather.append(Weather(hour: "N/A", hourTemp: 0, hourRain: "N/A", hourText: "N/A", hourImg: "N/A"))
                     }
                     self.timeLabel.text = self.city.time
                 case .failure(let error):
@@ -190,4 +202,21 @@ class CityViewController: UIViewController, UICollectionViewDataSource, UICollec
         }
     }
     
+    func getPicture(input: String) {
+        let url = "https://source.unsplash.com/1600x900/?" + input
+        Alamofire.request(url).responseData { response in
+            switch response.result {
+            case .success(let data):
+                if let image = UIImage(data: data) {
+                    self.city.picture.append(image)
+                    self.picture.image = self.city.picture[0]
+                } else {
+                    self.city.picture.append(#imageLiteral(resourceName: "picture"))
+                }
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+        }
+    }
+
 }

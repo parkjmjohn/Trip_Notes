@@ -5,7 +5,7 @@
 //  Created by John Park on 11/30/17.
 //  Copyright © 2017 John Park. All rights reserved.
 //
-import Foundation
+import UIKit
 
 struct City {
     
@@ -14,13 +14,15 @@ struct City {
     var notes: String
     var time: String
     var weather: [Weather]
+    var picture: [UIImage]
     
     // MARK: init
-    init(label: String, notes: String, time: String, weather: [Weather]) {
+    init(label: String, notes: String, time: String, weather: [Weather], picture: [UIImage]) {
         self.label = label
         self.notes = notes
         self.time = time
         self.weather = weather
+        self.picture = picture
     }
     
 }
