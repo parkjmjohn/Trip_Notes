@@ -235,17 +235,18 @@ class CityViewController: UIViewController, UICollectionViewDataSource, UICollec
                 }
         }
     }
-    
+//FIX - USE NETWORK MANAGER INSTEAD
     func getPicture(input: String) {
-        let url = "https://source.unsplash.com/1600x900/?" + input
+        let space = "%20"
+        let str = input.replacingOccurrences(of: " ", with: space)
+        let url = "https://source.unsplash.com/1600x900/?" + str
+        
         Alamofire.request(url).responseData { response in
             switch response.result {
             case .success(let data):
                 if let image = UIImage(data: data) {
                     self.city.picture.append(image)
                     self.picture.image = self.city.picture[0]
-                } else {
-                    self.city.picture.append(#imageLiteral(resourceName: "picture"))
                 }
             case .failure(let error):
                 print(error.localizedDescription)
