@@ -13,7 +13,7 @@ protocol CityProtocol {
     func didPressSaveCity(city: City)
 }
 
-class CityViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+class CityViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, UIPickerViewDelegate, UIPickerViewDataSource {
     
     // MARK: Spacing
     let padding1: CGFloat = 75
@@ -29,9 +29,13 @@ class CityViewController: UIViewController, UICollectionViewDataSource, UICollec
     var userNotes: UITextView!
     var timeLabel: UILabel!
     var weatherView: UICollectionView!
+    var picture: UIImageView!
+    var priorityLabel: UILabel!
+    var priorityChooser: UIPickerView!
     
     // MARK: Data
     var city: City!
+    let priorities = ["High", "Medium", "Low"]
     
     // MARK: Delegation
     var cityDelegate: CityProtocol!
@@ -57,6 +61,7 @@ class CityViewController: UIViewController, UICollectionViewDataSource, UICollec
         setUpLabels()
         setUpWeatherView()
         setUpNotes()
+        setUpPriorityChooser()
         
         // title
         let str: String = label.text!
@@ -69,6 +74,8 @@ class CityViewController: UIViewController, UICollectionViewDataSource, UICollec
         // Network
         setUpTimeLabel()
         getForecast(input: title!)
+        setUpPicture()
+        getPicture(input: title!)
     }
     
     // MARK: saveButton setup
@@ -90,6 +97,15 @@ class CityViewController: UIViewController, UICollectionViewDataSource, UICollec
         label.text = city.label
         label.font = UIFont(name: "Futura-CondensedExtraBold", size: fontSize)
         view.addSubview(label)
+        
+        priorityLabel = UILabel(frame: CGRect(x: padding3, y: padding1 * 1.9 + fontSize + padding3 + padding4 * 2, width: view.frame.width - padding3 * 2, height: fontSize + 4))
+        updatePriorityLabel()
+        priorityLabel.font = UIFont(name: "Futura-CondensedExtraBold", size: fontSize)
+        view.addSubview(priorityLabel)
+    }
+    
+    func updatePriorityLabel() {
+        priorityLabel.text = "Priority: " + city.priority
     }
     
     // MARK: noteLabel and userNotes setup
@@ -129,7 +145,6 @@ class CityViewController: UIViewController, UICollectionViewDataSource, UICollec
         layout.scrollDirection = .horizontal
         self.weatherView.collectionViewLayout = layout
         weatherView.showsHorizontalScrollIndicator = false
-        
         view.addSubview(weatherView)
     }
     
@@ -146,6 +161,38 @@ class CityViewController: UIViewController, UICollectionViewDataSource, UICollec
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: padding4, height: padding4)
+    }
+    
+    // MARK: Picture setup
+    func setUpPicture() {
+        picture = UIImageView(frame: CGRect(x: 0, y: padding1 * 1.75 + fontSize + padding3 + padding4, width: view.frame.width, height: padding4))
+        picture.contentMode = .scaleAspectFit
+        view.addSubview(picture)
+    }
+    
+    // MARK: Priority setup
+    func setUpPriorityChooser() {
+        priorityChooser = UIPickerView(frame: CGRect(x: 0, y: padding1 * 1.9 + fontSize + padding3 + padding4 * 2, width: view.frame.width, height: padding4))
+        priorityChooser.dataSource = self
+        priorityChooser.delegate = self
+        view.addSubview(priorityChooser)
+    }
+    
+    func numberOfComponents(in pickerView: UIPickerView) -> Int {
+        return 1
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        return priorities.count
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+        return priorities[row]
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        city.priority = priorities[row]
+        updatePriorityLabel()
     }
     
     // MARK: Required Swift function
@@ -181,7 +228,6 @@ class CityViewController: UIViewController, UICollectionViewDataSource, UICollec
                         self.weatherView.reloadData()
                     } else {
                         self.city.time = "Time: N/A"
-//                        self.city.weather.append(Weather(hour: "N/A", hourTemp: 0, hourRain: "N/A", hourText: "N/A", hourImg: "N/A"))
                     }
                     self.timeLabel.text = self.city.time
                 case .failure(let error):
@@ -190,4 +236,21 @@ class CityViewController: UIViewController, UICollectionViewDataSource, UICollec
         }
     }
     
+    func getPicture(input: String) {
+        let url = "https://source.unsplash.com/1600x900/?" + input
+        Alamofire.request(url).responseData { response in
+            switch response.result {
+            case .success(let data):
+                if let image = UIImage(data: data) {
+                    self.city.picture.append(image)
+                    self.picture.image = self.city.picture[0]
+                } else {
+                    self.city.picture.append(#imageLiteral(resourceName: "picture"))
+                }
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+        }
+    }
+
 }

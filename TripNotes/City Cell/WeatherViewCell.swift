@@ -63,10 +63,12 @@ class WeatherViewCell: UICollectionViewCell {
         hourTempLabel.font = UIFont(name: "TimesNewRomanPSMT", size: fontSize2)
         contentView.addSubview(hourTempLabel)
         
+        // hourRainLabel
         hourRainLabel = UILabel(frame: CGRect(x: padding1, y: padding1 * 3 + fontSize1 + 4 + fontSize2 + 3, width: frame.width - padding1, height: fontSize2 + 3))
         hourRainLabel.font = UIFont(name: "TimesNewRomanPSMT", size: fontSize2)
         contentView.addSubview(hourRainLabel)
         
+        // hourText
         hourText = UILabel(frame: CGRect(x: 0, y: padding1 * 5 + fontSize1 + 4 + (fontSize2 + 3) * 2 + imgSize, width: frame.width, height: fontSize2 + 3))
         hourText.font = UIFont(name: "TimesNewRomanPSMT", size: fontSize2)
         hourText.textAlignment = .center

@@ -28,7 +28,7 @@ class SaveViewController: UIViewController, UICollectionViewDataSource, UICollec
     var userNotes: UITextView!
     var timeLabel: UILabel!
     var weatherView: UICollectionView!
-    
+    var picture: UIImageView!
     
     // MARK: Data
     var city: City!
@@ -65,6 +65,7 @@ class SaveViewController: UIViewController, UICollectionViewDataSource, UICollec
         setUpNotes()
         setUpWeatherView()
         setUpTimeLabel()
+        setUpPicture()
         
         // title
         let str: String = label.text!
@@ -89,7 +90,7 @@ class SaveViewController: UIViewController, UICollectionViewDataSource, UICollec
     
     // MARK: label setup
     func setUpLabel() {
-        label = UILabel(frame: CGRect(x: 0, y: padding1, width: view.frame.width, height: fontSize))
+        label = UILabel(frame: CGRect(x: 0, y: padding1, width: view.frame.width, height: fontSize + 4))
         label.textAlignment = .center
         label.text = city.label
         label.font = UIFont(name: "Futura-CondensedExtraBold", size: fontSize)
@@ -150,6 +151,14 @@ class SaveViewController: UIViewController, UICollectionViewDataSource, UICollec
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: padding4, height: padding4)
+    }
+    
+    // MARK: Picture setup
+    func setUpPicture() {
+        picture = UIImageView(frame: CGRect(x: 0, y: padding1 * 1.75 + fontSize + padding3 + padding4, width: view.frame.width, height: padding4))
+        picture.contentMode = .scaleAspectFit
+        picture.image = city.picture[0]
+        view.addSubview(picture)
     }
     
     // MARK: Required Swift function
