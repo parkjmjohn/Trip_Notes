@@ -12,12 +12,13 @@ protocol SaveProtocol {
     func saveCity(index: Int, city: City)
 }
 
-class SaveViewController: UIViewController {
+class SaveViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
     // MARK: Spacing
     let padding1: CGFloat = 75
     let padding2: CGFloat = 8
     let padding3: CGFloat = 12
+    let padding4: CGFloat = 150
     let fontSize: CGFloat = 20
     
     // MARK: UI
@@ -26,6 +27,8 @@ class SaveViewController: UIViewController {
     var noteLabel: UILabel!
     var userNotes: UITextView!
     var timeLabel: UILabel!
+    var weatherView: UICollectionView!
+    
     
     // MARK: Data
     var city: City!
@@ -60,6 +63,7 @@ class SaveViewController: UIViewController {
         setUpSaveButton()
         setUpLabel()
         setUpNotes()
+        setUpWeatherView()
         setUpTimeLabel()
         
         // title
@@ -99,7 +103,10 @@ class SaveViewController: UIViewController {
         view.addSubview(noteLabel)
         
         userNotes = UITextView(frame: CGRect(x: padding2, y: view.center.y + padding1 * 3.3, width: view.frame.width - padding2 * 2, height: padding1 * 1.5))
-        userNotes.font = UIFont(name: "AmericanTypewriter ", size: 18.0)
+        userNotes.layer.cornerRadius = padding2
+        userNotes.layer.borderColor = UIColor(red: 0.2, green: 0.2, blue: 0.2, alpha: 1).cgColor
+        userNotes.layer.borderWidth = 1.0
+        userNotes.font = UIFont(name: "AmericanTypewriter", size: 18.0)
         userNotes.textColor = .blue
         userNotes.text = city.notes
         view.addSubview(userNotes)
@@ -111,6 +118,38 @@ class SaveViewController: UIViewController {
         timeLabel.text = city.time
         timeLabel.font = UIFont(name: "Futura-CondensedExtraBold", size: fontSize / 1.5)
         view.addSubview(timeLabel)
+    }
+    
+    // MARK: weatherView setup
+    func setUpWeatherView() {
+        weatherView = UICollectionView(frame: CGRect(x: 0, y: padding1 * 1.5 + fontSize + padding3, width: view.frame.width, height: padding4), collectionViewLayout: UICollectionViewFlowLayout())
+        weatherView.backgroundColor = .white
+        weatherView.register(WeatherViewCell.self, forCellWithReuseIdentifier: "WeatherViewCell")
+        weatherView.delegate = self
+        weatherView.dataSource = self
+        
+        // setting horizontal scroll view
+        let layout = UICollectionViewFlowLayout()
+        layout.scrollDirection = .horizontal
+        self.weatherView.collectionViewLayout = layout
+        weatherView.showsHorizontalScrollIndicator = false
+        
+        view.addSubview(weatherView)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return city.weather.count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = weatherView.dequeueReusableCell(withReuseIdentifier: "WeatherViewCell", for: indexPath) as! WeatherViewCell
+        cell.backgroundColor = UIColor(red: 0.9, green: 0.9, blue: 0.9, alpha: 1)
+        cell.setUpWeather(weather: city.weather[indexPath.row])
+        return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width: padding4, height: padding4)
     }
     
     // MARK: Required Swift function
