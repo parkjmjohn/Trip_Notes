@@ -34,7 +34,7 @@ class SaveViewController: UIViewController, UICollectionViewDataSource, UICollec
     
     // MARK: Data
     var city: City!
-    let priorities = ["High", "Medium", "Low"]
+    let priorities = ["", "High", "Medium", "Low"]
     
     // MARK: Delegation
     var saveDelegate: SaveProtocol!
