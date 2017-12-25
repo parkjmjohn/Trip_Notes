@@ -30,4 +30,12 @@ An app to plan your trips by getting updated information on your desired locatio
 
 
 
+##### Useful Tools
+- http://iosfonts.com/
+- https://briangrinstead.com/blog/ios-uicolor-picker/
+
+###### Credits
+- App Icon: https://icons8.com/
+- App Icon Generator: https://makeappicon.com/
+
 #### Note: This app is not for practical use. This app was developed to enhance my understanding of Swift. Cooler projects to come ahead :)
