@@ -6,6 +6,7 @@
 //  Copyright © 2017 John Park. All rights reserved.
 //
 import UIKit
+import Firebase
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -15,10 +16,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     // MARK: navigationController setup
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-        let navigationController = UINavigationController(rootViewController: ViewController())
+        let navigationController = UINavigationController(rootViewController: MainViewController())
         window = UIWindow(frame: UIScreen.main.bounds)
         window?.rootViewController = navigationController
         window?.makeKeyAndVisible()
+        
+        // MARK: Firebase
+        FirebaseApp.configure()
+        
         return true
     }
     

@@ -8,5 +8,7 @@ target 'TripNotes' do
   # Pods for TripNotes
   pod 'Alamofire'
   pod 'SwiftyJSON'
+  pod 'Firebase/Core'
+  pod 'Firebase/Auth'
 
 end

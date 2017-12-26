@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0D12E22F1FF1AD57006C4F51 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0D12E22E1FF1AD57006C4F51 /* GoogleService-Info.plist */; };
+		0D12E2321FF1ADA5006C4F51 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D12E2311FF1ADA5006C4F51 /* MainViewController.swift */; };
 		0D1662A71FDC5A09007BEF69 /* Weather.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D1662A61FDC5A09007BEF69 /* Weather.swift */; };
 		0D1662A91FDD1BC6007BEF69 /* WeatherViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D1662A81FDD1BC6007BEF69 /* WeatherViewCell.swift */; };
 		0D4F1D041FD86BAB003125D3 /* CityViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D4F1D031FD86BAB003125D3 /* CityViewController.swift */; };
@@ -23,6 +25,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0D12E22E1FF1AD57006C4F51 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		0D12E2311FF1ADA5006C4F51 /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		0D1662A61FDC5A09007BEF69 /* Weather.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Weather.swift; sourceTree = "<group>"; };
 		0D1662A81FDD1BC6007BEF69 /* WeatherViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = WeatherViewCell.swift; path = "TripNotes/City Cell/WeatherViewCell.swift"; sourceTree = SOURCE_ROOT; };
 		0D4F1D031FD86BAB003125D3 /* CityViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CityViewController.swift; sourceTree = "<group>"; };
@@ -54,6 +58,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0D12E2301FF1AD7C006C4F51 /* Auth */ = {
+			isa = PBXGroup;
+			children = (
+				0D12E2311FF1ADA5006C4F51 /* MainViewController.swift */,
+			);
+			path = Auth;
+			sourceTree = "<group>";
+		};
 		0D1662A01FDC597C007BEF69 /* Home */ = {
 			isa = PBXGroup;
 			children = (
@@ -113,6 +125,7 @@
 			isa = PBXGroup;
 			children = (
 				0DA3D7821FCF4AC500A88672 /* AppDelegate.swift */,
+				0D12E2301FF1AD7C006C4F51 /* Auth */,
 				0D1662A31FDC59D5007BEF69 /* City Cell */,
 				0D1662A01FDC597C007BEF69 /* Home */,
 				0D1662A11FDC59AE007BEF69 /* Structs */,
@@ -120,6 +133,7 @@
 				0DA3D7891FCF4AC500A88672 /* Assets.xcassets */,
 				0DA3D78B1FCF4AC500A88672 /* LaunchScreen.storyboard */,
 				0DA3D78E1FCF4AC500A88672 /* Info.plist */,
+				0D12E22E1FF1AD57006C4F51 /* GoogleService-Info.plist */,
 			);
 			path = TripNotes;
 			sourceTree = "<group>";
@@ -205,6 +219,7 @@
 			files = (
 				0DA3D78D1FCF4AC500A88672 /* LaunchScreen.storyboard in Resources */,
 				0DA3D78A1FCF4AC500A88672 /* Assets.xcassets in Resources */,
+				0D12E22F1FF1AD57006C4F51 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -252,12 +267,18 @@
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-TripNotes/Pods-TripNotes-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
+				"${BUILT_PRODUCTS_DIR}/GTMSessionFetcher/GTMSessionFetcher.framework",
+				"${BUILT_PRODUCTS_DIR}/GoogleToolboxForMac/GoogleToolboxForMac.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftyJSON/SwiftyJSON.framework",
+				"${BUILT_PRODUCTS_DIR}/nanopb/nanopb.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GTMSessionFetcher.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleToolboxForMac.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyJSON.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/nanopb.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -272,6 +293,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				0DAA5D291FD7A90C001E37ED /* NetworkManager.swift in Sources */,
+				0D12E2321FF1ADA5006C4F51 /* MainViewController.swift in Sources */,
 				0D4F1D161FD8CD84003125D3 /* SaveViewController.swift in Sources */,
 				0DA3D7971FCF820600A88672 /* NoteCell.swift in Sources */,
 				0D1662A91FDD1BC6007BEF69 /* WeatherViewCell.swift in Sources */,
