@@ -19,7 +19,6 @@ An app to plan your trips by getting updated information on your desired locatio
    - CollectionView: The CollectionView displays information horizontally but hides the scroll bar
    - TableView: Saved cities can be erased by swiping to the left in the TableView
    - Notes: Users can type in notes about the city, and save all of the informaiton about the city having it displayed in a TableView of saved cities.
-   - Strings: For me, dealing with Strings in Swift was extremely tricky. However, I got the title to display only the city's name of the location.
 
 
 
