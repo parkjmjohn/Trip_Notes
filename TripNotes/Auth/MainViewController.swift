@@ -9,7 +9,7 @@
 import UIKit
 import FirebaseAuth
 
-class MainViewController: UIViewController {
+class MainViewController: UIViewController, UITextFieldDelegate {
 
     // MARK: Spacing
     let padding0: CGFloat = 120.0
@@ -105,6 +105,8 @@ class MainViewController: UIViewController {
                     }
                 })
             }
+        } else {
+            updateDescriptor(newText: "Fill in fields")
         }
     }
     
@@ -119,6 +121,7 @@ class MainViewController: UIViewController {
         email.autocapitalizationType = .none
         email.spellCheckingType = .no
         email.font = UIFont(name: "Farah", size: textSize0)
+        email.delegate = self
         view.addSubview(email)
         
         password = UITextField(frame: CGRect(x: 0, y: padding0 * 1.2 + textSize0 * const * 2.0, width: padding1, height: textSize0 * const))
@@ -131,7 +134,14 @@ class MainViewController: UIViewController {
         password.autocapitalizationType = .none
         password.spellCheckingType = .no
         password.isSecureTextEntry = true
+        password.delegate = self
         view.addSubview(password)
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        goProcess()
+        return true
     }
     
     // MARK: SegmentedController setup
