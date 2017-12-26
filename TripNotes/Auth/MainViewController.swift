@@ -76,6 +76,7 @@ class MainViewController: UIViewController, UITextFieldDelegate {
             if selector.selectedSegmentIndex == 0 {
                 Auth.auth().signIn(withEmail: userEmail!, password: userPassword!, completion: { (user, error) in
                     if user != nil {
+                        self.cleanUpTextFields()
                         let viewController = ViewController()
                         self.navigationController?.pushViewController(viewController, animated: true)
                     } else {
@@ -94,6 +95,7 @@ class MainViewController: UIViewController, UITextFieldDelegate {
                         self.password.text = ""
                         self.selector.selectedSegmentIndex = 0
                         self.updateDescriptor(newText: "Sign Up Success")
+                        self.cleanUpTextFields()
                         self.changeOptions()
                     } else {
                         if let userError = error?.localizedDescription {
@@ -138,9 +140,18 @@ class MainViewController: UIViewController, UITextFieldDelegate {
         view.addSubview(password)
     }
     
+    func cleanUpTextFields() {
+        email.text = ""
+        password.text = ""
+    }
+    
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        textField.resignFirstResponder()
-        goProcess()
+        if textField == email {
+            textField.resignFirstResponder()
+            password.becomeFirstResponder()
+        } else {
+            goProcess()
+        }
         return true
     }
     
@@ -158,6 +169,7 @@ class MainViewController: UIViewController, UITextFieldDelegate {
     
     @objc func changeOptions() {
         changeButtonTitle()
+        cleanUpTextFields()
         updateDescriptor(newText: selector.titleForSegment(at: selector.selectedSegmentIndex)!)
     }
     
