@@ -10,5 +10,7 @@ target 'TripNotes' do
   pod 'SwiftyJSON'
   pod 'Firebase/Core'
   pod 'Firebase/Auth'
+  pod 'Firebase/Database'
+  pod 'Firebase/Storage'
 
 end

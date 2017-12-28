@@ -8,6 +8,7 @@
 import UIKit
 import Alamofire
 import SwiftyJSON
+import Firebase
 
 protocol CityProtocol {
     func didPressSaveCity(city: City)
@@ -40,6 +41,8 @@ class CityViewController: UIViewController, UICollectionViewDataSource, UICollec
     // MARK: Delegation
     var cityDelegate: CityProtocol!
     
+    var tittle: String!
+    
     // MARK: Init
     init(city: City) {
         super.init(nibName: nil, bundle: nil)
@@ -71,6 +74,8 @@ class CityViewController: UIViewController, UICollectionViewDataSource, UICollec
             title = str.uppercased()
         }
         
+        tittle = title
+        
         // Network
         setUpTimeLabel()
         getForecast(input: title!)
@@ -87,6 +92,35 @@ class CityViewController: UIViewController, UICollectionViewDataSource, UICollec
     @objc func saveCity() {
         city.notes = userNotes.text
         cityDelegate.didPressSaveCity(city: city)
+        // Data Base integration
+        
+//        let email = Auth.auth().currentUser?.email!
+//        let storageRef = Storage.storage().reference().child(email!).child("cities")
+//        var userData = city.label.data(using: String.Encoding.utf8)
+//        userData?.append(city.notes.data(using: String.Encoding.utf8)!)
+//        userData?.append(city.time.data(using: String.Encoding.utf8)!)
+//        userData?.append(city.priority.data(using: String.Encoding.utf8)!)
+//        storageRef.putData(userData!)
+        
+        let ref = Database.database().reference(fromURL: "https://tripnotes-3dffb.firebaseio.com/")
+        let currentUser = Auth.auth().currentUser?.uid
+        var userRef = ref.child("users").child(currentUser!).child("Cities").child(tittle)
+        userRef.updateChildValues(["label": city.label])
+        userRef.updateChildValues(["notes": city.notes])
+        userRef.updateChildValues(["time": city.time])
+        userRef.updateChildValues(["priority": city.priority])
+        // userRef.updateChildValues(["picture": city.picture[n]])
+        
+        userRef = userRef.child("Weather")
+        for n in 0...23 {
+            let weatherUserRef = userRef.child("Weather" + String(n))
+            weatherUserRef.updateChildValues(["weatherHour": city.weather[n].hour])
+            weatherUserRef.updateChildValues(["weatherTemp": city.weather[n].hourTemp])
+            weatherUserRef.updateChildValues(["weatherRain": city.weather[n].hourRain])
+            weatherUserRef.updateChildValues(["weatherText": city.weather[n].hourText])
+            weatherUserRef.updateChildValues(["weatherImg": city.weather[n].hourImg])
+        }
+        
         navigationController?.popViewController(animated: true)
     }
     
@@ -246,6 +280,7 @@ class CityViewController: UIViewController, UICollectionViewDataSource, UICollec
             case .success(let data):
                 if let image = UIImage(data: data) {
                     self.city.picture.append(image)
+                    print(self.city.picture[0])
                     self.picture.image = self.city.picture[0]
                 }
             case .failure(let error):

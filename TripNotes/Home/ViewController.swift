@@ -6,6 +6,7 @@
 //  Copyright © 2017 John Park. All rights reserved.
 //
 import UIKit
+import Firebase
 
 class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, SearchProtocol, SaveProtocol {
     
@@ -16,6 +17,8 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     // MARKL: Cell
     var saveCities: [City] = []
     
+    // Firebase
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -25,6 +28,10 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         // UI setup
         setUpTableView()
         setUpCreateNote()
+        
+//        // FirebaseReference
+//        let storage = Storage.storage()
+//        let storageRef = storage.reference()
     }
     
     // MARK: tableView setup

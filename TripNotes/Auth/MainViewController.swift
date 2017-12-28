@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import FirebaseAuth
+import Firebase
 
 class MainViewController: UIViewController, UITextFieldDelegate {
 
@@ -41,6 +41,18 @@ class MainViewController: UIViewController, UITextFieldDelegate {
         setUpTextFields()
         setUpSelector()
         setUpButton()
+        
+        // Firebase
+        logout()
+//        print(Auth.auth().currentUser?.email! ?? "Success")
+    }
+    
+    func logout() {
+        do {
+            try Auth.auth().signOut()
+        } catch let logoutError {
+            print (logoutError)
+        }
     }
     
     // MARK: setUpDescriptor()
@@ -91,12 +103,18 @@ class MainViewController: UIViewController, UITextFieldDelegate {
             } else {
                 Auth.auth().createUser(withEmail: userEmail!, password: userPassword!, completion: { (user, error) in
                     if user != nil {
+                        // UI Cleanup
                         self.email.text = ""
                         self.password.text = ""
                         self.selector.selectedSegmentIndex = 0
                         self.updateDescriptor(newText: "Sign Up Success")
                         self.cleanUpTextFields()
                         self.changeOptions()
+                        
+                        // Data Base integration
+                        let ref = Database.database().reference(fromURL: "https://tripnotes-3dffb.firebaseio.com/")
+                        let userRef = ref.child("users").child((user?.uid)!)
+                        userRef.updateChildValues(["E-mail": userEmail!])
                     } else {
                         if let userError = error?.localizedDescription {
                             self.updateDescriptor(newText: userError)
